@@ -22,5 +22,5 @@ intialize git - git init
 set master branch name to main - git branch -m main
 create git ignore file - dotnet new gitignore
 connect to a remote repository - git remote add origin https://github.com/drgamss/angular_dotnet.git
-push files to remote repository - 
+push files to remote repository - git push -u origin main
 
