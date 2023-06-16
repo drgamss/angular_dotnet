@@ -1,0 +1,24 @@
+create new class library - dotnet new classlib -n {{className}}
+
+add new class library to solution - dotnet sln add {{nameOfClassName}}
+
+add dependancy of one project to another - 
+1. go to project where you to add the dependancy (cd api for example).
+2. add reference of class Infrastructure to api project - dotnet add reference ..\Infrastructure\ 
+3. after applying references run dotnet restore
+
+after making changes to classes and namespaces - dotnet restore, dotnet build
+
+needs to be run in API folder:
+dotnet watch run --no-hot-reload
+
+dotnet migrations ef add InitialCreate -o Data/Migrations
+dotnet ef database update
+
+
+git - 
+-------
+intialize git - git init
+set master branch name to main - git branch -m main
+create git ignore file - dotnet new gitignore
+
