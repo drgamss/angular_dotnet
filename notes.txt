@@ -12,9 +12,17 @@ after making changes to classes and namespaces - dotnet restore, dotnet build
 needs to be run in API folder:
 dotnet watch run --no-hot-reload
 
+ef - 
+------
 dotnet migrations ef add InitialCreate -o Data/Migrations
 dotnet ef database update
 
+drop db in Infrastructure project (-p Infrastructure) + telling ef where startup project is (-s API)
+dotnet ef database drop -p Infrastructure -s API
+
+remove migrations from Infrastructure project (-p Infrastructure) + telling ef where startup project is (-s API)
+dotnet ef migrations remove -p Infrastructure -s API
+dotnet ef migrations add InitialCreate -p Infrastructure -s API -o Data/Migrations
 
 git - 
 -------
