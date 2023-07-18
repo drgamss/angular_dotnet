@@ -32,3 +32,7 @@ create git ignore file - dotnet new gitignore
 connect to a remote repository - git remote add origin https://github.com/drgamss/angular_dotnet.git
 push files to remote repository - git push -u origin main
 
+swagger - 
+https://localhost:5001/swagger/index.html
+https://localhost:5001/swagger/v1/swagger.json
+
