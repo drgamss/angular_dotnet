@@ -9,7 +9,6 @@ namespace Core.Specifications
         {
             AddInclude(x => x.ProductBrand);
             AddInclude(x => x.ProductType);
-            AddOrderBy(x => x.Name);
 
             if(!string.IsNullOrEmpty(sort))
             {
@@ -22,7 +21,7 @@ namespace Core.Specifications
                         AddOrderByDescending(p => p.Price);
                         break;
                     default: 
-                        AddOrderBy(x => x.Name);
+                        AddOrderBy(n => n.Name);
                         break;
                 }
             }
