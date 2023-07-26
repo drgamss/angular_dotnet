@@ -10,15 +10,15 @@ namespace Infrastructure.Data
         {
         }
 
-        public DbSet<Product> products { get; set;}
-        public DbSet<ProductBrand> ProductBrands  { get; set;}
+        public DbSet<Product> products { get; set; }
+        public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            if(Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
+            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
             {
                 foreach(var entityType in modelBuilder.Model.GetEntityTypes())
                 {

@@ -35,8 +35,8 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Price")
+                        .HasColumnType("NUMERIC");
 
                     b.Property<int>("ProductBrandId")
                         .HasColumnType("INTEGER");

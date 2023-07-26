@@ -36,3 +36,5 @@ swagger -
 https://localhost:5001/swagger/index.html
 https://localhost:5001/swagger/v1/swagger.json
 
+dotnet ef database update --connection "Data source=skinet.db"
+
