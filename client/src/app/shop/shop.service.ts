@@ -20,7 +20,7 @@ export class ShopService {
     if(brandId) params = params.append('brandId', brandId);
     if(typeId) params = params.append('typeId', typeId);
 
-    return this.http.get<Pagination<Product[]>>(this.baseUrl, {params: params});
+    return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products', {params: params});
   }
 
   getBrands() {
