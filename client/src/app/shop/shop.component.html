@@ -53,7 +53,9 @@
       <div class="d-flex justify-content-center">
         <pagination
           [boundaryLinks]="true"
-          [totalItems]="77"
+          [totalItems]="totalCount"
+          [itemsPerPage]="shopParams.pageSize"
+          [maxSize]="10"
           previousText="&lsaquo;"
           nextText="&rsaquo;"
           firstText="&laquo;"

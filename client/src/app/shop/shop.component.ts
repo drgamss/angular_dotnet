@@ -21,6 +21,7 @@ export class ShopComponent implements OnInit {
     {name: 'Price: Low to High', value: 'priceAsc'},
     {name: 'Price: High to Low', value: 'priceDesc'},
   ];
+  totalCount = 0;
 
 
   constructor(private shopService: ShopService) { }
@@ -33,7 +34,12 @@ export class ShopComponent implements OnInit {
 
   getProducts(){
     this.shopService.getProducts(this.shopParams).subscribe({
-      next: response => this.products = response.data,
+      next: response => {
+        this.products = response.data;
+        this.shopParams.pageNumber = response.pageIndex;
+        this.shopParams.pageSize = response.pageSize;
+        this.totalCount = response.count;
+      },
       error: error => console.log(error)
     })
   }
