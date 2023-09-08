@@ -9,3 +9,16 @@
     top: -21px;
     right: 32px;
 }
+
+a {
+    text-decoration: none;
+    color: #343840;
+
+    &.active {
+        color: orange;
+    }
+}
+
+.logo {
+    cursor: pointer;
+}
