@@ -1,0 +1,66 @@
+<form [formGroup]="stockForm" (ngSubmit)="saveForm()" class="container mt-3">
+  <div formArrayName="stocks">
+    <div
+      *ngFor="let stock of getControls(); let i = index"
+      [formGroupName]="i"
+      class="card mb-3"
+    >
+      <div class="card-body">
+        <h5 class="card-title">Stock {{ i + 1 }}</h5>
+
+        <!-- Each group in its own row -->
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label for="ticker">Ticker</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ticker"
+              formControlName="ticker"
+              placeholder="Enter Ticker"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label for="cost">Cost</label>
+            <input
+              type="number"
+              class="form-control"
+              id="cost"
+              formControlName="cost"
+              placeholder="Enter Cost"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label for="amount">Amount</label>
+            <input
+              type="number"
+              class="form-control"
+              id="amount"
+              formControlName="amount"
+              placeholder="Enter Amount"
+            />
+          </div>
+          <div class="form-group weight-container col-md-3">
+            <label for="weightTarget">Weight Target</label>
+            <input
+              type="number"
+              class="form-control"
+              id="weightTarget"
+              formControlName="weightTarget"
+              placeholder="Enter Weight Target"
+            />
+            <span class="input-group-text" id="weightTargetPercentage">%</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-danger" (click)="removeStock(i)">
+          Remove Stock
+        </button>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn btn-success" (click)="addStock()">
+    Add Stock
+  </button>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
