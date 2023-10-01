@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../services/data.service';
+import { MarketStackService } from '../services/marketStack.service';
 
 @Component({
   selector: 'app-stocks',
@@ -10,17 +11,17 @@ import { DataService } from '../services/data.service';
 export class StocksComponent implements OnInit {
   stockForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private dataService: DataService) { }
+  constructor(private fb: FormBuilder, private dataService: DataService, private marketStackService: MarketStackService) { }
 
   ngOnInit(): void {
     this.stockForm = this.fb.group({
       stocks: this.fb.array([]) // This will hold the array of stocks
     });
-     // Check local storage for existing data
-     const storedData = localStorage.getItem('stockData');
-     if (storedData) {
-       this.populateForm(JSON.parse(storedData));
-     }
+    // Check local storage for existing data
+    const storedData = this.dataService.getStockData();
+    if (storedData) {
+      this.populateForm(storedData);
+    }
   }
 
   getControls() {
@@ -76,8 +77,7 @@ export class StocksComponent implements OnInit {
   // Save the form data to local storage
   saveForm() {
     const formData = this.stockForm.value;
-    const jsonData = JSON.stringify(formData);
-    localStorage.setItem('stockData', jsonData);
-    this.dataService.setStockData(this.stockForm.value);
+    this.dataService.setStockData(formData);
+
   }
 }

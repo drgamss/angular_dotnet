@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { MarketStackService } from '../services/marketStack.service';
 
 @Component({
   selector: 'app-table',
@@ -8,13 +9,14 @@ import { DataService } from '../services/data.service';
 })
 export class TableComponent implements OnInit {
 
-  constructor(private dataService: DataService){}
+  constructor(private dataService: DataService, private marketStackService: MarketStackService){}
 
   ngOnInit(): void {
-    const storedData = localStorage.getItem('stockData');
+    const storedData = this.dataService.getStockData();
     if (storedData) {
-      console.log(JSON.parse(storedData));
+      console.log(storedData);
     }
+    this.marketStackService.getPriceAndDividendData(storedData.stocks.length);
   }
 
 

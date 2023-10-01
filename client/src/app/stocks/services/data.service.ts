@@ -8,14 +8,17 @@ export class DataService {
 
   constructor() { }
 
-  private stockData: Stock[] = [];
-
-  setStockData(data: Stock[]): void {
-    this.stockData = data;
+  setStockData(data: any): void {
+    const jsonData = JSON.stringify(data);
+    localStorage.setItem('stockData', jsonData);
   }
 
-  getStockData(): Stock[] {
-    return this.stockData;
+  getStockData(): any {
+    const jsonData = localStorage.getItem('stockData');
+    if(jsonData){
+      return JSON.parse(jsonData);
+    }
+    return [];
   }
 
 }
