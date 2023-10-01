@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { StocksComponent } from './stocks/stocks.component';
 import { StocksRoutingModule } from './stocks-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TableComponent } from './table/table.component';
 
 
 
 @NgModule({
   declarations: [
-    StocksComponent
+    StocksComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,

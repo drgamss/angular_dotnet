@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-stocks',
@@ -9,7 +10,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class StocksComponent implements OnInit {
   stockForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private dataService: DataService) { }
 
   ngOnInit(): void {
     this.stockForm = this.fb.group({
@@ -77,5 +78,6 @@ export class StocksComponent implements OnInit {
     const formData = this.stockForm.value;
     const jsonData = JSON.stringify(formData);
     localStorage.setItem('stockData', jsonData);
+    this.dataService.setStockData(this.stockForm.value);
   }
 }
