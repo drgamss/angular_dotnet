@@ -32,28 +32,28 @@ export class TableComponent implements OnInit {
     return this.mathService.calculateStockWeight(symbol, this.stockArray);
   }
 
- // Function to toggle the sort order
- toggleSortOrder(column: keyof CalculatedStockData): void {
-   if (column === this.sortColumn) {
-     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-   } else {
-     this.sortColumn = column;
-     this.sortDirection = 'asc';
-   }
+  // Function to toggle the sort order
+  toggleSortOrder(column: keyof CalculatedStockData): void {
+    if (column === this.sortColumn) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
 
-   this.sortArray();
- }
+    this.sortArray();
+  }
 
- // Function to sort the array based on the current sort column and order
- sortArray(): void {
-   this.stockArray.sort((a, b) => {
-     const sortOrder = this.sortDirection === 'asc' ? 1 : -1;
-     const valueA = a[this.sortColumn];
-     const valueB = b[this.sortColumn];
+  // Function to sort the array based on the current sort column and order
+  sortArray(): void {
+    this.stockArray.sort((a, b) => {
+      const sortOrder = this.sortDirection === 'asc' ? 1 : -1;
+      const valueA = a[this.sortColumn];
+      const valueB = b[this.sortColumn];
 
-     return (valueA < valueB ? -1 : 1) * sortOrder;
-   });
- }
+      return (valueA < valueB ? -1 : 1) * sortOrder;
+    });
+  }
 
 
 
