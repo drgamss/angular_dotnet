@@ -14,9 +14,10 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     const storedData = this.dataService.getStockData();
     if (storedData) {
-      console.log(storedData);
+      //console.log(storedData);
     }
-    this.marketStackService.getPriceAndDividendData(storedData.stocks.length);
+    const stockArray = this.marketStackService.getPriceAndDividendData(storedData.stocks);
+    console.log(stockArray);
   }
 
 
