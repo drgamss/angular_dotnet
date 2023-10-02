@@ -1,1 +1,16 @@
-<p>table works!</p>
+<!-- In stock-table.component.html -->
+<table>
+    <thead>
+      <tr>
+        <th (click)="toggleSortOrder('symbol')">Symbol</th>
+        <th (click)="toggleSortOrder('weight')">Weight</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stock of stockArray">
+        <td>{{ stock.symbol }}</td>
+        <td>{{ stock.weight }}</td>
+      </tr>
+    </tbody>
+  </table>
+  

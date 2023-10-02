@@ -4,20 +4,22 @@ import { environment } from 'src/environments/environment';
 import dividendData from '../data/dividends';
 import priceData from '../data/eod';
 import { UtilitiesService } from './utilities.service';
-import { DividendData, DividendFrequency, Stock, StockData } from '../models/stock';
+import { CalculatedStockData, DividendData, DividendFrequency, Stock, StockData } from '../models/stock';
+import { MathService } from './math.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarketStackService {
 
-  constructor(private dateService: DateService, private utilitiesService: UtilitiesService) { }
+  constructor(private dateService: DateService, private utilitiesService: UtilitiesService, private mathService: MathService) { }
 
   getPriceAndDividendData (storedData: Stock[]){
     // const fiveYearsAgo = this.dateService.getFiveYearsAgo();
     // console.log(environment.marketStackUrl);
-    console.log(dividendData.data);
-    // console.log("storedData", storedData);
+    //console.log("storedData", storedData);
+    //console.log('dividendData.data', dividendData.data);
+    
 
     const uniqueSymbolsArray = [...new Set(dividendData.data.map(item => item.symbol))];
     //console.log(uniqueSymbolsArray);
@@ -61,15 +63,23 @@ export class MarketStackService {
     });
 
     const frequencyArray = this.calculateDividendFrequency(dividendData.data);
-    console.log('frequency', frequencyArray);
+    //console.log('frequency', frequencyArray);
 
-    console.log('mergedArray', newArrayWithoutField);
+    //console.log('mergedArray', newArrayWithoutField);
 
     const newArrayWithFrequencyField = this.addFrequencyToStockArray(newArrayWithoutField, frequencyArray);
-    console.log('newArrayWithFrequencyField', newArrayWithFrequencyField);
+    //console.log('newArrayWithFrequencyField', newArrayWithFrequencyField);
+
+    const newArrayWithWeightField = this.addWeightToStockArray(newArrayWithFrequencyField);
 
     return newArrayWithFrequencyField;
     
+  }
+
+  addWeightToStockArray(stockData: CalculatedStockData[]){
+    for(var i = 0; i < stockData.length; i++){
+      stockData[i].weight = this.mathService.calculateStockWeight(stockData[i].symbol, stockData);
+    }
   }
 
   calculateDividendFrequency(dividendData: DividendData[]): DividendFrequency[] {
@@ -120,7 +130,8 @@ export class MarketStackService {
     return result;
   }
 
-  addFrequencyToStockArray(stockArray: StockData[], frequencyData: DividendFrequency[]): StockData[] {
+  addFrequencyToStockArray(stockArray: any[], frequencyData: DividendFrequency[]): CalculatedStockData[] {
+
     return stockArray.map(stock => {
         const frequencyObj = frequencyData.find(item => item.symbol === stock.symbol);
 
@@ -134,7 +145,8 @@ export class MarketStackService {
         // For example: return { ...stock, frequency: 'unknown' };
 
     });
-}
+
+  }
 
 
 }

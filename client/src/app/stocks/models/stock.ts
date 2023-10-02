@@ -17,7 +17,14 @@ export interface DividendFrequency {
 }
 
 export interface StockData {
+    date: string;
+    dividend: number;
     symbol: string;
+    close: number;
+    cost: number;
+    amount: number;
+    weightTarget: number;
+    frequency?: 'monthly' | 'quarterly' | 'semi-annual' | 'annual';
 }
 export interface CalculatedStockData {
     date: string;
@@ -28,4 +35,5 @@ export interface CalculatedStockData {
     amount: number;
     weightTarget: number;
     frequency: 'monthly' | 'quarterly' | 'semi-annual' | 'annual';
+    weight: number;
 }
