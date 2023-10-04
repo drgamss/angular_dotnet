@@ -8,6 +8,8 @@ export class MathService {
 
   constructor() { }
 
+  totalPortfolioValue: number = 0;
+
   calculateStockWeight(symbol: string, stockData: CalculatedStockData[]): number {
     // Find the stock with the given symbol
     const selectedStock = stockData.find(stock => stock.symbol === symbol);
@@ -25,9 +27,39 @@ export class MathService {
     return roundedStockWeight;
   }
 
-  calculateTotalPortfolioValue(stockData: CalculatedStockData[]): number {
-    // Calculate the total value of the portfolio by summing up the value of each stock
-    return stockData.reduce((totalValue, stock) => totalValue + stock.close * stock.amount, 0);
+  getTargetValue(weightTarget: number, amount: number, price: number) {
+
   }
 
+  calculateTotalPortfolioValue(stockData: CalculatedStockData[]): number {
+    // Calculate the total value of the portfolio by summing up the value of each stock
+    this.totalPortfolioValue = stockData.reduce((totalValue, stock) => totalValue + stock.close * stock.amount, 0);
+    return this.totalPortfolioValue;
+  }
+
+  calculateStockUnderWeight(stockData: CalculatedStockData): number {
+
+    var targetValue = this.getTargetValue(stockData.weightTarget, stockData.amount, stockData.close);
+
+    return 0;
+  }
+
+  calculateWeightDifference(weightTarget: number, amount: number, close: number) {
+    // Calculate the actual weight percentage
+    const actualWeight = (amount * close / this.totalPortfolioValue) * 100;
+
+    // Calculate the target value based on the weight target
+    const targetValue = (weightTarget / 100) * this.totalPortfolioValue;
+
+    // Calculate the difference between the actual value and the target value
+    const difference = amount * close - targetValue;
+
+    // Return the difference as a positive or negative number
+    return difference;
 }
+
+}
+
+
+
+

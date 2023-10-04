@@ -36,4 +36,5 @@ export interface CalculatedStockData {
     weightTarget: number;
     frequency: 'monthly' | 'quarterly' | 'semi-annual' | 'annual';
     weight: number;
+    overWeight: number;
 }

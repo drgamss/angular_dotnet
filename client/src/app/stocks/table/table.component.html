@@ -1,16 +1,23 @@
 <!-- In stock-table.component.html -->
 <table>
-    <thead>
-      <tr>
-        <th (click)="toggleSortOrder('symbol')">Symbol</th>
-        <th (click)="toggleSortOrder('weight')">Weight</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let stock of stockArray">
-        <td>{{ stock.symbol }}</td>
-        <td>{{ stock.weight }}</td>
-      </tr>
-    </tbody>
-  </table>
-  
+  <thead>
+    <tr>
+      <th (click)="toggleSortOrder('symbol')">Symbol</th>
+      <th (click)="toggleSortOrder('weight')">Weight</th>
+      <th (click)="toggleSortOrder('overWeight')">Overwight/Underweight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let stock of stockArray">
+      <td>{{ stock.symbol }}</td>
+      <td>
+        {{ stock.weight }}
+      </td>
+      <td>
+        <span [ngClass]="{ overweight: stock.overWeight > 0, underweight: stock.overWeight < 0, }"
+          >{{ stock.overWeight | number : "1.2-2" }}
+          {{ stock.overWeight > 0 ? "Overweight" : "Underweight" }}</span
+        >
+    </tr>
+  </tbody>
+</table>

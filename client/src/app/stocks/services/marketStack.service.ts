@@ -71,8 +71,9 @@ export class MarketStackService {
     //console.log('newArrayWithFrequencyField', newArrayWithFrequencyField);
 
     const newArrayWithWeightField = this.addWeightToStockArray(newArrayWithFrequencyField);
+    const newArrayWithUnderweightField = this.calculateWeightStatus(newArrayWithWeightField);
 
-    return newArrayWithFrequencyField;
+    return newArrayWithUnderweightField;
     
   }
 
@@ -80,6 +81,7 @@ export class MarketStackService {
     for(var i = 0; i < stockData.length; i++){
       stockData[i].weight = this.mathService.calculateStockWeight(stockData[i].symbol, stockData);
     }
+    return stockData;
   }
 
   calculateDividendFrequency(dividendData: DividendData[]): DividendFrequency[] {
@@ -146,6 +148,15 @@ export class MarketStackService {
 
     });
 
+  }
+
+  calculateWeightStatus(stockData: CalculatedStockData[]): CalculatedStockData[]{
+    for(var i = 0; i < stockData.length; i++){
+      var overweightAmount = this.mathService.calculateWeightDifference(stockData[i].weightTarget, stockData[i].amount, stockData[i].close)
+      console.log('overweightAmount' + stockData[i].symbol, overweightAmount);
+      stockData[i].overWeight = overweightAmount;
+    }
+    return stockData;
   }
 
 
