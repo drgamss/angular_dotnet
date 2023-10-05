@@ -56,9 +56,27 @@ export class MathService {
 
     // Return the difference as a positive or negative number
     return difference;
+  }
+
+  calculateForwardYield(stock: CalculatedStockData) {
+    // Map frequency to corresponding multiplier (monthly: 12, quarterly: 4, semi-annual: 2, annual: 1)
+    const frequencyMultiplier = {
+      monthly: 12,
+      quarterly: 4,
+      'semi-annual': 2,
+      annual: 1,
+    };
+
+    // Calculate annual dividend income
+    const annualDividendIncome = stock.dividend * frequencyMultiplier[stock.frequency];
+
+    // Calculate forward yield
+    const forwardYield = (annualDividendIncome / stock.close) * 100; // multiply by 100 to convert to percentage
+
+    return Number(forwardYield.toFixed(2)); // Round to two decimal places
+  }
 }
 
-}
 
 
 

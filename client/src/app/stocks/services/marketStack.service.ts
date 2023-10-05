@@ -15,11 +15,6 @@ export class MarketStackService {
   constructor(private dateService: DateService, private utilitiesService: UtilitiesService, private mathService: MathService) { }
 
   getPriceAndDividendData (storedData: Stock[]){
-    // const fiveYearsAgo = this.dateService.getFiveYearsAgo();
-    // console.log(environment.marketStackUrl);
-    //console.log("storedData", storedData);
-    //console.log('dividendData.data', dividendData.data);
-    
 
     const uniqueSymbolsArray = [...new Set(dividendData.data.map(item => item.symbol))];
     //console.log(uniqueSymbolsArray);
@@ -39,8 +34,6 @@ export class MarketStackService {
       ...item,
       close: symbolCloseMap.get(item.symbol)
     }));
-
-    //console.log('updatedArray', updatedArray);
 
     // Create a map for faster lookup
     const symbolMap = new Map(storedData.map(item => [item.ticker, item]));
@@ -63,18 +56,22 @@ export class MarketStackService {
     });
 
     const frequencyArray = this.calculateDividendFrequency(dividendData.data);
-    //console.log('frequency', frequencyArray);
-
-    //console.log('mergedArray', newArrayWithoutField);
-
     const newArrayWithFrequencyField = this.addFrequencyToStockArray(newArrayWithoutField, frequencyArray);
-    //console.log('newArrayWithFrequencyField', newArrayWithFrequencyField);
-
-    const newArrayWithWeightField = this.addWeightToStockArray(newArrayWithFrequencyField);
-    const newArrayWithUnderweightField = this.calculateWeightStatus(newArrayWithWeightField);
-
-    return newArrayWithUnderweightField;
+    //const newArrayWithWeightField = this.addWeightToStockArray(newArrayWithFrequencyField);
+    let finalArray = this.calculateWeightStatus(newArrayWithFrequencyField);
+    finalArray = this.addAllOtherFields(finalArray);
+    return finalArray;
     
+  }
+
+  addAllOtherFields(stockData: CalculatedStockData[]): CalculatedStockData[]{
+    for(var i = 0; i < stockData.length; i++){
+      stockData[i].weight = this.mathService.calculateStockWeight(stockData[i].symbol, stockData);
+      stockData[i].marketValue = stockData[i].amount * stockData[i].close;
+      stockData[i].overWeight = this.mathService.calculateWeightDifference(stockData[i].weightTarget, stockData[i].amount, stockData[i].close);;
+      stockData[i].yieldFwd = this.mathService.calculateForwardYield(stockData[i]);
+    }
+    return stockData;
   }
 
   addWeightToStockArray(stockData: CalculatedStockData[]){
@@ -152,9 +149,7 @@ export class MarketStackService {
 
   calculateWeightStatus(stockData: CalculatedStockData[]): CalculatedStockData[]{
     for(var i = 0; i < stockData.length; i++){
-      var overweightAmount = this.mathService.calculateWeightDifference(stockData[i].weightTarget, stockData[i].amount, stockData[i].close)
-      console.log('overweightAmount' + stockData[i].symbol, overweightAmount);
-      stockData[i].overWeight = overweightAmount;
+
     }
     return stockData;
   }
