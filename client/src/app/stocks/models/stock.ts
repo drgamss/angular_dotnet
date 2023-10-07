@@ -39,4 +39,5 @@ export interface CalculatedStockData {
     overWeight: number;
     marketValue: number;
     yieldFwd: number;
+    yieldOnCost: number;
 }

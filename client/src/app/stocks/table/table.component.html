@@ -10,6 +10,7 @@
         <th (click)="toggleSortOrder('amount')">Amount</th>
         <th (click)="toggleSortOrder('close')">Price</th>
         <th (click)="toggleSortOrder('yieldFwd')">Forward Yield</th>
+        <th (click)="toggleSortOrder('yieldOnCost')">Yield On Cost</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
         <td>{{ stock.amount }}</td>
         <td>{{ stock.close }}</td>
         <td>{{ stock.yieldFwd }}%</td>
+        <td>{{ stock.yieldOnCost }}%</td>
       </tr>
     </tbody>
   </table>  

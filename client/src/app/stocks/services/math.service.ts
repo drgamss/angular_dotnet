@@ -75,6 +75,24 @@ export class MathService {
 
     return Number(forwardYield.toFixed(2)); // Round to two decimal places
   }
+
+  calculateYielsOnCost(stock: CalculatedStockData): number {
+        // Map frequency to corresponding multiplier (monthly: 12, quarterly: 4, semi-annual: 2, annual: 1)
+        const frequencyMultiplier = {
+          monthly: 12,
+          quarterly: 4,
+          'semi-annual': 2,
+          annual: 1,
+        };
+    
+        // Calculate annual dividend income
+        const annualDividendIncome = stock.dividend * frequencyMultiplier[stock.frequency];
+    
+        // Calculate forward yield
+        const forwardYield = (annualDividendIncome / stock.cost) * 100; // multiply by 100 to convert to percentage
+    
+        return Number(forwardYield.toFixed(2)); // Round to two decimal places
+  }
 }
 
 
