@@ -9,6 +9,7 @@ export class MathService {
   constructor() { }
 
   totalPortfolioValue: number = 0;
+  totalAnnualIncome: number = 0;
 
   calculateStockWeight(symbol: string, stockData: CalculatedStockData[]): number {
     // Find the stock with the given symbol
@@ -76,22 +77,73 @@ export class MathService {
     return Number(forwardYield.toFixed(2)); // Round to two decimal places
   }
 
-  calculateYielsOnCost(stock: CalculatedStockData): number {
-        // Map frequency to corresponding multiplier (monthly: 12, quarterly: 4, semi-annual: 2, annual: 1)
-        const frequencyMultiplier = {
-          monthly: 12,
-          quarterly: 4,
-          'semi-annual': 2,
-          annual: 1,
-        };
-    
-        // Calculate annual dividend income
-        const annualDividendIncome = stock.dividend * frequencyMultiplier[stock.frequency];
-    
-        // Calculate forward yield
-        const forwardYield = (annualDividendIncome / stock.cost) * 100; // multiply by 100 to convert to percentage
-    
-        return Number(forwardYield.toFixed(2)); // Round to two decimal places
+  calculateYieldOnCost(stock: CalculatedStockData): number {
+    // Map frequency to corresponding multiplier (monthly: 12, quarterly: 4, semi-annual: 2, annual: 1)
+    const frequencyMultiplier = {
+      monthly: 12,
+      quarterly: 4,
+      'semi-annual': 2,
+      annual: 1,
+    };
+
+    // Calculate annual dividend income
+    const annualDividendIncome = stock.dividend * frequencyMultiplier[stock.frequency];
+
+    // Calculate forward yield
+    const forwardYield = (annualDividendIncome / stock.cost) * 100; // multiply by 100 to convert to percentage
+
+    return Number(forwardYield.toFixed(2)); // Round to two decimal places
+  }
+
+  calculateIncomePercentage(stockData: CalculatedStockData[], symbol: string): number {
+
+    const totalAnnualIncome = stockData.reduce((total, stock) => {
+      let annualDividend = 0;
+
+      switch (stock.frequency) {
+        case 'monthly':
+          annualDividend = stock.dividend * 12;
+          break;
+        case 'quarterly':
+          annualDividend = stock.dividend * 4;
+          break;
+        case 'semi-annual':
+          annualDividend = stock.dividend * 2;
+          break;
+        case 'annual':
+          annualDividend = stock.dividend;
+          break;
+      }
+
+      return total + annualDividend * stock.amount;
+    }, 0);
+
+    const targetStock = stockData.find((stock) => stock.symbol === symbol);
+
+    if (!targetStock) {
+      throw new Error(`Stock with symbol ${symbol} not found.`);
+    }
+
+    let targetStockAnnualIncome = 0;
+
+    switch (targetStock.frequency) {
+      case 'monthly':
+        targetStockAnnualIncome = targetStock.dividend * 12;
+        break;
+      case 'quarterly':
+        targetStockAnnualIncome = targetStock.dividend * 4;
+        break;
+      case 'semi-annual':
+        targetStockAnnualIncome = targetStock.dividend * 2;
+        break;
+      case 'annual':
+        targetStockAnnualIncome = targetStock.dividend;
+        break;
+    }
+
+    const incomePrecentage = (targetStockAnnualIncome * targetStock.amount) / totalAnnualIncome * 100;
+    return Number(incomePrecentage.toFixed(2));
+
   }
 }
 

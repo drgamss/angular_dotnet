@@ -70,7 +70,8 @@ export class MarketStackService {
       stockData[i].marketValue = stockData[i].amount * stockData[i].close;
       stockData[i].overWeight = this.mathService.calculateWeightDifference(stockData[i].weightTarget, stockData[i].amount, stockData[i].close);;
       stockData[i].yieldFwd = this.mathService.calculateForwardYield(stockData[i]);
-      stockData[i].yieldOnCost = this.mathService.calculateYielsOnCost(stockData[i]);
+      stockData[i].yieldOnCost = this.mathService.calculateYieldOnCost(stockData[i]);
+      stockData[i].incomePercentage = this.mathService.calculateIncomePercentage(stockData, stockData[i].symbol);
     }
     return stockData;
   }

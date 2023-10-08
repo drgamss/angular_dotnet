@@ -40,4 +40,5 @@ export interface CalculatedStockData {
     marketValue: number;
     yieldFwd: number;
     yieldOnCost: number;
+    incomePercentage: number;
 }
